@@ -1,9 +1,11 @@
-import {getSearchTemplate} from './components/search.js';
-import {getProfileTemplate} from './components/profile.js';
-import {getMenuTemplate} from './components/menu.js';
-import {getFiltersTemplate} from './components/filters.js';
-import {getFilmListTemplate} from './components/film-list.js';
-import {getFilmDetailsTemplate} from './components/film-details.js';
+import {
+  getSearchTemplate,
+  getProfileTemplate,
+  getMenuTemplate,
+  getFiltersTemplate,
+  getFilmListTemplate,
+  getFilmDetailsTemplate
+} from './components';
 
 const renderComponent = (container, markup) => {
   container.insertAdjacentHTML(`beforeEnd`, markup);
