@@ -19,4 +19,4 @@ renderComponent(header, getProfileTemplate());
 renderComponent(main, getMenuTemplate());
 renderComponent(main, getFiltersTemplate());
 renderComponent(main, getFilmListTemplate());
-renderComponent(body, getFilmDetailsTemplate());
+// renderComponent(body, getFilmDetailsTemplate());
