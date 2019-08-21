@@ -1,4 +1,6 @@
-const cutText = (text) => `${text.split(``).slice(0, 140).join(``)}` + `${(text.length < 140 ? `` : `...`)}`;
+const MAX_LENGTH_DESCRIPTION = 140;
+
+const cutText = (text) => `${text.split(``).slice(0, MAX_LENGTH_DESCRIPTION).join(``)}` + `${(text.length < MAX_LENGTH_DESCRIPTION ? `` : `...`)}`;
 
 export const getFilmCardTemplate = ({title, rating, year, genre, comments, poster, description}) => `
 <article class="film-card">

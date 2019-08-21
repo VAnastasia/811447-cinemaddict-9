@@ -1,3 +1,5 @@
+const FILMS_AMOUNT = 21;
+
 const defineUserRating = (filmsAmount) => {
   if (filmsAmount > 0 && filmsAmount <= 10) {
     return `Novice`;
@@ -10,5 +12,5 @@ const defineUserRating = (filmsAmount) => {
 };
 
 export const getUserRating = () => `
-  <p class="profile__rating">${defineUserRating(21)}</p>
+  <p class="profile__rating">${defineUserRating(FILMS_AMOUNT)}</p>
 `;

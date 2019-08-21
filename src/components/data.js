@@ -1,4 +1,4 @@
-const FILMS_AMOUNT = 15;
+const FILMS_AMOUNT = 20;
 
 const TITLES_FILMS = [
   `Snow Cake`,
@@ -51,8 +51,6 @@ const GENRES = [
   `Mystery`
 ];
 
-const getDescription = (array) => shuffleArray(array).slice(0, Math.ceil(Math.random() * 3)).join(``);
-
 const shuffleArray = (array) => {
   let j;
   let temp;
@@ -65,7 +63,11 @@ const shuffleArray = (array) => {
   return array;
 };
 
-const getRandomItemArray = (array) => array[Math.floor(Math.random() * array.length)];
+const getDescription = (array) =>
+  shuffleArray(array).slice(0, Math.ceil(Math.random() * 3)).join(``);
+
+const getRandomItemArray = (array) =>
+  array[Math.floor(Math.random() * array.length)];
 
 const getFilm = () => ({
   title: getRandomItemArray(TITLES_FILMS),
@@ -75,13 +77,25 @@ const getFilm = () => ({
   rating: (Math.random() * 9).toFixed(1),
   comments: Math.round(Math.random() * 20),
   year: 2000 + Math.round(Math.random() * 20),
-  isWatchlist: true,
-  isWatched: false,
-  isFavorite: false
+  isWatchlist: Math.round(Math.random()),
+  isWatched: Math.round(Math.random()),
+  isFavorite: Math.round(Math.random())
 });
 
 const getFilmList = (count) => {
-  return new Array(count).fill().map(() => getFilm());
+  return new Array(count).fill().map(getFilm);
 };
 
 export const films = getFilmList(FILMS_AMOUNT);
+
+export const groupedFilms = films.reduce(({watchlist = 0, watched = 0, favorite = 0}, film) => {
+  watchlist += film.isWatchlist;
+  watched += film.isWatched;
+  favorite += film.isFavorite;
+
+  return {
+    watchlist,
+    watched,
+    favorite
+  };
+});

@@ -2,9 +2,9 @@ import {getSearchTemplate} from './search';
 import {getProfileTemplate} from './profile';
 import {getMenuTemplate} from './menu';
 import {getFiltersTemplate} from './filters';
-import {getFilmListTemplate} from './film-list';
+import {getFilmListTemplate, renderFilms, filmsAll} from './film-list';
 import {getFilmDetailsTemplate} from './film-details';
-import {films} from './data';
+import {groupedFilms, films} from './data';
 
 export {
   getSearchTemplate,
@@ -13,5 +13,8 @@ export {
   getFiltersTemplate,
   getFilmListTemplate,
   getFilmDetailsTemplate,
-  films
+  filmsAll,
+  films,
+  renderFilms,
+  groupedFilms
 };
