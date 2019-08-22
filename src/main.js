@@ -25,7 +25,7 @@ renderComponent(header, getProfileTemplate());
 renderComponent(main, getMenuTemplate(groupedFilms));
 renderComponent(main, getFiltersTemplate());
 renderComponent(main, getFilmListTemplate());
-// renderComponent(body, getFilmDetailsTemplate());
+renderComponent(body, getFilmDetailsTemplate(filmsAll[0]));
 footerStatistics.textContent = `${films.length} movies inside`;
 
 if (filmsAll.length > 0) {
@@ -39,3 +39,9 @@ if (filmsAll.length > 0) {
     }
   });
 }
+
+const closePopup = document.querySelector(`.film-details__close-btn`);
+const filmDetails = document.querySelector(`.film-details`);
+closePopup.addEventListener(`click`, () => {
+  filmDetails.style = `display: none`;
+});

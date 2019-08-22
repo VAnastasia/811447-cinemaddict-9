@@ -51,6 +51,33 @@ const GENRES = [
   `Mystery`
 ];
 
+const AGE_CATEGORIES = [
+  `0+`,
+  `6+`,
+  `12+`,
+  `16+`,
+  `18+`
+];
+
+const NAMES = [
+  `Quentin Tarantino`,
+  `Steven Spielberg`,
+  `Martin Scorsese`,
+  `James Cameron`,
+  `Tim Burton`,
+  `Sofia Coppola`,
+  `Ridley Scott`,
+  `J. J. Abrams`
+];
+
+const COUNTRIES = [
+  `USA`,
+  `United Kingdom`,
+  `France`,
+  `Canada`,
+  `Spain`
+];
+
 const shuffleArray = (array) => {
   let j;
   let temp;
@@ -69,14 +96,23 @@ const getDescription = (array) =>
 const getRandomItemArray = (array) =>
   array[Math.floor(Math.random() * array.length)];
 
+const getRandonNumber = (min, max) =>
+  Math.floor(Math.random() * (max - min)) + min;
+
 const getFilm = () => ({
   title: getRandomItemArray(TITLES_FILMS),
   description: getDescription(DESCRIPTIONS),
+  director: getRandomItemArray(NAMES),
+  writers: getRandomItemArray(NAMES),
+  actors: getRandomItemArray(NAMES),
   poster: getRandomItemArray(POSTERS),
-  genre: getRandomItemArray(GENRES),
-  rating: (Math.random() * 9).toFixed(1),
-  comments: Math.round(Math.random() * 20),
-  year: 2000 + Math.round(Math.random() * 20),
+  genres: getRandomItemArray(GENRES),
+  rating: (getRandonNumber(0, 9)).toFixed(1),
+  comments: getRandonNumber(0, 20),
+  year: getRandonNumber(2000, 2019),
+  age: getRandomItemArray(AGE_CATEGORIES),
+  runtime: `1h ${getRandonNumber(0, 59)}m`,
+  country: getRandomItemArray(COUNTRIES),
   isWatchlist: Math.round(Math.random()),
   isWatched: Math.round(Math.random()),
   isFavorite: Math.round(Math.random())
