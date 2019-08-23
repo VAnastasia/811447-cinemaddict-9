@@ -1,3 +1,5 @@
+import {formatDate} from './utils';
+
 const FILMS_AMOUNT = 20;
 
 const TITLES_FILMS = [
@@ -109,29 +111,28 @@ const getFilm = () => ({
   genres: getRandomItemArray(GENRES),
   rating: (getRandonNumber(0, 9)).toFixed(1),
   comments: getRandonNumber(0, 20),
-  year: getRandonNumber(2000, 2019),
+  year: formatDate(getRandonNumber(0, Date.now())),
   age: getRandomItemArray(AGE_CATEGORIES),
   runtime: `1h ${getRandonNumber(0, 59)}m`,
   country: getRandomItemArray(COUNTRIES),
-  isWatchlist: Math.round(Math.random()),
-  isWatched: Math.round(Math.random()),
-  isFavorite: Math.round(Math.random())
+  watchlist: Math.round(Math.random()),
+  watched: Math.round(Math.random()),
+  favorite: Math.round(Math.random())
 });
 
-const getFilmList = (count) => {
-  return new Array(count).fill().map(getFilm);
-};
+const getFilmList = (count) =>
+  new Array(count).fill().map(getFilm);
 
 export const films = getFilmList(FILMS_AMOUNT);
 
-export const groupedFilms = films.reduce(({watchlist = 0, watched = 0, favorite = 0}, film) => {
-  watchlist += film.isWatchlist;
-  watched += film.isWatched;
-  favorite += film.isFavorite;
+export const groupedFilms = films.reduce(({watchlist, watched, favorite}, film) => {
+  watchlist += film.watchlist;
+  watched += film.watched;
+  favorite += film.favorite;
 
   return {
     watchlist,
     watched,
     favorite
   };
-});
+}, {watchlist: 0, watched: 0, favorite: 0});

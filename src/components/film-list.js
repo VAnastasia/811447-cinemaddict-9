@@ -1,6 +1,6 @@
 import {getFilmCardTemplate} from './film-card';
 import {getButtonShowTemplate} from './button-show-more';
-import {films} from './data';
+import {films} from './../data';
 
 const filmsAll = films.slice();
 

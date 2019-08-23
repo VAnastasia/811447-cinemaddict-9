@@ -4,7 +4,6 @@ import {getMenuTemplate} from './menu';
 import {getFiltersTemplate} from './filters';
 import {getFilmListTemplate, renderFilms, filmsAll} from './film-list';
 import {getFilmDetailsTemplate} from './film-details';
-import {groupedFilms, films} from './data';
 
 export {
   getSearchTemplate,
@@ -14,7 +13,5 @@ export {
   getFilmListTemplate,
   getFilmDetailsTemplate,
   filmsAll,
-  films,
   renderFilms,
-  groupedFilms
 };

@@ -7,9 +7,12 @@ import {
   getFilmDetailsTemplate,
   renderFilms,
   filmsAll,
+} from './components';
+
+import {
   films,
   groupedFilms
-} from './components';
+} from './data.js';
 
 const renderComponent = (container, markup) => {
   container.insertAdjacentHTML(`beforeEnd`, markup);
