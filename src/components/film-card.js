@@ -1,29 +1,55 @@
-import {truncateString} from './../utils';
+import {truncateString, createElement} from '../utils';
 
-export const getFilmCardTemplate = ({
-  title,
-  rating,
-  year,
-  runtime,
-  genres,
-  comments,
-  poster,
-  description
-}) =>
-  `<article class="film-card">
-    <h3 class="film-card__title">${title}</h3>
-    <p class="film-card__rating">${rating}</p>
-    <p class="film-card__info">
-      <span class="film-card__year">${year}</span>
-      <span class="film-card__duration">${runtime}</span>
-      <span class="film-card__genre">${genres}</span>
-    </p>
-    <img src="./images/posters/${poster}" alt="${title}" class="film-card__poster">
-    <p class="film-card__description">${truncateString(description)}</p>
-    <a class="film-card__comments">${comments} comments</a>
-    <form class="film-card__controls">
-      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-      <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
-    </form>
-  </article>`;
+export class FilmCard {
+  constructor({
+    title,
+    rating,
+    year,
+    runtime,
+    genres,
+    comments,
+    poster,
+    description
+  }) {
+    this._title = title;
+    this._rating = rating;
+    this._year = year;
+    this._runtime = runtime;
+    this._genres = genres;
+    this._comments = comments;
+    this._poster = poster;
+    this._description = description;
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return `<article class="film-card">
+      <h3 class="film-card__title">${this._title}</h3>
+      <p class="film-card__rating">${this._rating}</p>
+      <p class="film-card__info">
+        <span class="film-card__year">${this._year}</span>
+        <span class="film-card__duration">${this._runtime}</span>
+        <span class="film-card__genre">${this._genres}</span>
+      </p>
+      <img src="./images/posters/${this._poster}" alt="${this._title}" class="film-card__poster">
+      <p class="film-card__description">${truncateString(this._description)}</p>
+      <a class="film-card__comments">${this._comments} comments</a>
+      <form class="film-card__controls">
+        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
+        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
+        <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+      </form>
+    </article>`;
+  }
+}
