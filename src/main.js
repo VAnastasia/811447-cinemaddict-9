@@ -18,6 +18,7 @@ import {Profile} from './components/profile';
 import {Menu} from './components/menu';
 import {Filters} from './components/filters';
 import {ShowMore} from './components/button-show-more';
+import {NoFilm} from './components/no-film';
 import {Position, render, unrender} from './utils';
 
 const renderFilmsContainer = () => {
@@ -45,12 +46,18 @@ const renderFilters = () => {
   render(main, filters.getElement(), Position.BEFOREEND);
 };
 
+const renderNoFilm = () => {
+  const message = new NoFilm();
+  render(main, message.getElement(), Position.BEFOREEND);
+};
+
 const renderShowMore = () => {
   const button = new ShowMore();
   const filmsList = document.querySelector(`.films-list`);
   render(filmsList, button.getElement(), Position.BEFOREEND);
   button.getElement()
     .addEventListener(`click`, () => {
+      const filmsAllContainer = document.querySelector(`.films-list__container`);
       filmsAll.splice(0, 5).forEach((film) => renderFilm(film, filmsAllContainer));
       if (filmsAll.length === 0) {
         unrender(button.getElement());
@@ -98,6 +105,18 @@ export const renderFilm = (filmMock, filmContainer) => {
       unrender(filmPopup.getElement());
     });
 
+  filmPopup.getElement()
+    .querySelector(`textarea`)
+    .addEventListener(`focus`, () => {
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    });
+
+  filmPopup.getElement()
+    .querySelector(`textarea`)
+    .addEventListener(`blur`, () => {
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
   render(filmContainer, film.getElement(), Position.BEFOREEND);
 };
 
@@ -112,18 +131,22 @@ renderProfile();
 renderMenu(groupedFilms);
 renderFilters();
 
-renderFilmsContainer();
-const filmsAllContainer = document.querySelector(`.films-list__container`);
-filmsAll.splice(0, 5).forEach((film) => renderFilm(film, filmsAllContainer));
+if (films.length === 0) {
+  renderNoFilm();
+} else {
+  renderFilmsContainer();
+  const filmsAllContainer = document.querySelector(`.films-list__container`);
+  filmsAll.splice(0, 5).forEach((film) => renderFilm(film, filmsAllContainer));
 
-if (filmsAll.length > 0) {
-  renderShowMore();
+  if (filmsAll.length > 0) {
+    renderShowMore();
+  }
+
+  const filmsRatedContainer = document.querySelectorAll(`.films-list--extra .films-list__container`)[0];
+  filmsRated.forEach((film) => renderFilm(film, filmsRatedContainer));
+
+  const filmsCommentedContainer = document.querySelectorAll(`.films-list--extra .films-list__container`)[1];
+  filmsCommented.forEach((film) => renderFilm(film, filmsCommentedContainer));
 }
-
-const filmsRatedContainer = document.querySelectorAll(`.films-list--extra .films-list__container`)[0];
-filmsRated.forEach((film) => renderFilm(film, filmsRatedContainer));
-
-const filmsCommentedContainer = document.querySelectorAll(`.films-list--extra .films-list__container`)[1];
-filmsCommented.forEach((film) => renderFilm(film, filmsCommentedContainer));
 
 footerStatistics.textContent = `${films.length} movies inside`;
