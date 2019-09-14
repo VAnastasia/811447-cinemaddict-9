@@ -1,4 +1,4 @@
-import {films} from './../data';
+import {films} from '../data';
 
 const Rating = {
   NOVICE: `Novice`,

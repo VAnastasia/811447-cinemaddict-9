@@ -136,3 +136,15 @@ export const groupedFilms = films.reduce(({watchlist, watched, favorite}, film) 
     favorite
   };
 }, {watchlist: 0, watched: 0, favorite: 0});
+
+export const filmsAll = films.slice();
+
+export const filmsRated = films
+  .slice()
+  .sort((a, b) => a.rating < b.rating ? 1 : -1)
+  .slice(0, 2);
+
+export const filmsCommented = films
+  .slice()
+  .sort((a, b) => a.comments < b.comments ? 1 : -1)
+  .slice(0, 2);
