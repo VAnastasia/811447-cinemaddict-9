@@ -6,7 +6,6 @@ import {
 import {Search} from './components/search';
 import {Profile} from './components/profile';
 import {Menu} from './components/menu';
-import {Filters} from './components/filters';
 
 import {NoFilm} from './components/no-film';
 import {Position, render, unrender} from './utils';
@@ -33,10 +32,10 @@ const renderMenu = (filmsMock) => {
   render(main, menu.getElement(), Position.BEFOREEND);
 };
 
-const renderFilters = () => {
-  const filters = new Filters();
-  render(main, filters.getElement(), Position.BEFOREEND);
-};
+// const renderFilters = () => {
+//   const filters = new Sort();
+//   render(main, filters.getElement(), Position.BEFOREEND);
+// };
 
 // const renderNoFilm = () => {
 //   const message = new NoFilm();
@@ -51,7 +50,7 @@ const footerStatistics = document.querySelector(`.footer__statistics`);
 renderSearch();
 renderProfile();
 renderMenu(groupedFilms);
-renderFilters();
+// renderFilters();
 
 
 const pageController = new PageController(main, films);

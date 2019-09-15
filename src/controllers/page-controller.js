@@ -3,16 +3,22 @@ import {FilmList} from '../components/film-list';
 import {FilmCard} from '../components/film-card';
 import {FilmDetails} from '../components/film-details';
 import {ShowMore} from '../components/show-more';
+import {Sort} from '../components/sort';
 
 export class PageController {
   constructor(container, films) {
     this._container = container;
     this._films = films;
     this._list = new FilmList();
+    this._sort = new Sort();
   }
 
   init() {
     render(this._container, this._list.getElement(), Position.BEFOREEND);
+    render(this._container, this._sort.getElement(), Position.AFTERBEGIN);
+
+    this._sort.getElement()
+      .addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
 
     this._filmsAll = this._films.slice();
     this._filmsRated = this._films
@@ -25,15 +31,18 @@ export class PageController {
       .sort((a, b) => a.comments < b.comments ? 1 : -1)
       .slice(0, 2);
 
-    const filmsAllContainer = document.querySelector(`.films-list__container`);
+    const filmsAllContainer = this._list.getElement()
+      .querySelector(`.films-list__container`);
     this._filmsAll.splice(0, 5).forEach((film) => this._renderFilm(film, filmsAllContainer));
 
     this._renderShowMore();
 
-    const filmsRatedContainer = document.querySelectorAll(`.films-list--extra .films-list__container`)[0];
+    const filmsRatedContainer = this._list.getElement()
+      .querySelectorAll(`.films-list--extra .films-list__container`)[0];
     this._filmsRated.forEach((film) => this._renderFilm(film, filmsRatedContainer));
 
-    const filmsCommentedContainer = document.querySelectorAll(`.films-list--extra .films-list__container`)[1];
+    const filmsCommentedContainer = this._list.getElement()
+      .querySelectorAll(`.films-list--extra .films-list__container`)[1];
     this._filmsCommented.forEach((film) => this._renderFilm(film, filmsCommentedContainer));
   }
 
@@ -109,6 +118,43 @@ export class PageController {
             render(filmsList, showMore.getElement(), Position.BEFOREEND);
           }
         });
+    }
+  }
+
+  _onSortLinkClick(evt) {
+    evt.preventDefault();
+
+    if (evt.target.tagName !== `A`) {
+      return;
+    }
+
+    const filmsAllContainer = this._list.getElement()
+      .querySelector(`.films-list__container`);
+
+    const showMore = this._list.getElement()
+      .querySelector(`.films-list__show-more`);
+
+    filmsAllContainer.innerHTML = ``;
+    unrender(showMore);
+
+    switch (evt.target.dataset.sortType) {
+      case `date`:
+        const sortedByDateFilms = this._films.slice().sort((a, b) => new Date(a.year) - new Date(b.year));
+        this._filmsAll = sortedByDateFilms.slice();
+        this._filmsAll.splice(0, 5).forEach((film) => this._renderFilm(film, filmsAllContainer));
+        this._renderShowMore();
+        break;
+      case `rating`:
+        const sortedByRatingFilms = this._films.slice().sort((a, b) => b.rating - a.rating);
+        this._filmsAll = sortedByRatingFilms.slice();
+        this._filmsAll.splice(0, 5).forEach((film) => this._renderFilm(film, filmsAllContainer));
+        this._renderShowMore();
+        break;
+      case `default`:
+        this._filmsAll = this._films.slice();
+        this._filmsAll.splice(0, 5).forEach((film) => this._renderFilm(film, filmsAllContainer));
+        this._renderShowMore();
+        break;
     }
   }
 }
