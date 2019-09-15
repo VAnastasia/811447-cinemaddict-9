@@ -1,18 +1,6 @@
-import {createElement} from '../utils';
+import {AbstractComponent} from './abstract-component';
 
-export class FilmList {
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
-
+export class FilmList extends AbstractComponent {
   getTemplate() {
     return `<section class="films">
       <section class="films-list">

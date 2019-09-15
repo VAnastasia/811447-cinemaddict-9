@@ -1,19 +1,7 @@
 import {getUserRating} from './user-rating.js';
-import {createElement} from '../utils';
+import {AbstractComponent} from './abstract-component';
 
-export class Profile {
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
-
+export class Profile extends AbstractComponent {
   getTemplate() {
     return `<section class="header__profile profile">
       ${getUserRating()}

@@ -1,18 +1,6 @@
-import {createElement} from '../utils';
+import {AbstractComponent} from './abstract-component';
 
-export class Filters {
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
-
+export class Filters extends AbstractComponent {
   getTemplate() {
     return `<ul class="sort">
       <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>

@@ -1,18 +1,6 @@
-import {createElement} from '../utils';
+import {AbstractComponent} from './abstract-component';
 
-export class NoFilm {
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
-
+export class NoFilm extends AbstractComponent {
   getTemplate() {
     return `<div class="no-result">
       There is no movies for your request.

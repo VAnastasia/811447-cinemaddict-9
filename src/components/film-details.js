@@ -1,7 +1,7 @@
 import {getCommentsTemplate} from './comments';
-import {createElement} from '../utils';
+import {AbstractComponent} from './abstract-component';
 
-export class FilmDetails {
+export class FilmDetails extends AbstractComponent {
   constructor({
     poster,
     age,
@@ -19,6 +19,7 @@ export class FilmDetails {
     watched,
     favorite
   }) {
+    super();
     this._poster = poster;
     this._age = age;
     this._title = title;
@@ -34,18 +35,6 @@ export class FilmDetails {
     this._watchlist = watchlist;
     this._watched = watched;
     this._favorite = favorite;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   getTemplate() {
