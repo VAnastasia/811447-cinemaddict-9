@@ -11,6 +11,7 @@ import {NoFilm} from './components/no-film';
 import {Position, render, unrender} from './utils';
 
 import {PageController} from './controllers/page-controller';
+// import {MovieController} from './controllers/movie-controller'
 
 // const renderFilmsContainer = () => {
 //   const filmList = new FilmList();
