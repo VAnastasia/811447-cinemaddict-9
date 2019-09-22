@@ -104,7 +104,13 @@ const getRandonNumber = (min, max) =>
 const getRandomBoolean = (chance = 0.5) =>
   Math.random() > chance;
 
+const numbers = new Array(FILMS_AMOUNT).fill().map((value, index) => {
+  value = index;
+  return value;
+});
+
 const getFilm = () => ({
+  id: numbers.shift(),
   title: getRandomItemArray(TITLES_FILMS),
   description: getDescription(DESCRIPTIONS),
   director: getRandomItemArray(NAMES),
@@ -112,11 +118,11 @@ const getFilm = () => ({
   actors: getRandomItemArray(NAMES),
   poster: getRandomItemArray(POSTERS),
   genres: getRandomItemArray(GENRES),
-  rating: (getRandonNumber(0, 9)).toFixed(1),
+  rating: (getRandonNumber(0, 99) / 10).toFixed(1),
   comments: getRandonNumber(0, 20),
   year: formatDate(getRandonNumber(0, Date.now())),
   age: getRandomItemArray(AGE_CATEGORIES),
-  runtime: `1h ${getRandonNumber(0, 59)}m`,
+  runtime: `${getRandonNumber(0, 120)}m`,
   country: getRandomItemArray(COUNTRIES),
   watchlist: getRandomBoolean(),
   watched: getRandomBoolean(),

@@ -19,13 +19,21 @@ export class PageController {
   }
 
   init() {
-    render(this._container, this._list.getElement(), Position.BEFOREEND);
+    // render(this._container, this._list.getElement(), Position.BEFOREEND);
     render(this._container, this._sort.getElement(), Position.AFTERBEGIN);
 
     this._sort.getElement()
       .addEventListener(`click`, (evt) => this._onSortLinkClick(evt));
 
-    this._filmsAll = this._films.slice();
+    this._renderList();
+  }
+
+  _renderList() {
+    // this._filmsAll = this._films.slice();
+    unrender(this._list.getElement());
+    this._list.removeElement();
+    render(this._container, this._list.getElement(), Position.BEFOREEND);
+
     this._filmsRated = this._films
       .slice()
       .sort((a, b) => a.rating < b.rating ? 1 : -1)
@@ -40,9 +48,8 @@ export class PageController {
       .querySelector(`.films-list__container`);
 
     this._filmsAll = this._films.slice();
-    this._filmsAll.splice(0, 5).forEach((film) => this._renderFilm(film, filmsAllContainer));
 
-    console.log(this._films.forEach((film) => this._renderFilm(film, filmsAllContainer)));
+    this._filmsAll.splice(0, 5).forEach((film) => this._renderFilm(film, filmsAllContainer));
 
     this._renderShowMore();
 
@@ -55,9 +62,8 @@ export class PageController {
     this._filmsCommented.forEach((film) => this._renderFilm(film, filmsCommentedContainer));
   }
 
-  _renderFilm(film) {
-    const movieController = new MovieController(this._list, film, this._onChangeView, this._onDataChange);
-
+  _renderFilm(film, container) {
+    const movieController = new MovieController(container, film, this._onChangeView, this._onDataChange);
     this._subscriptions.push(movieController.setDefaultView.bind(movieController));
   }
 
@@ -65,66 +71,10 @@ export class PageController {
     this._subscriptions.forEach((it) => it());
   }
 
-  _onDataChange(newData, oldData) {
-    this._films[this._filmss.findIndex((it) => it === oldData)] = newData;
-    this._renderBoard(this._films);
+  _onDataChange(newData, index) {
+    this._films[index] = newData;
+    this._renderList();
   }
-
-
-  // _renderFilm(filmMock, filmContainer) {
-  //   const film = new FilmCard(filmMock);
-  //   const filmPopup = new FilmDetails(filmMock);
-  //
-  //   const onEscKeyDown = (evt) => {
-  //     if (evt.key === `Escape` || evt.key === `Esc`) {
-  //       unrender(filmPopup.getElement());
-  //       document.removeEventListener(`keydown`, onEscKeyDown);
-  //     }
-  //   };
-  //
-  //   const renderFilmPopup = () => {
-  //     render(this._container, filmPopup.getElement(), Position.BEFOREEND);
-  //     document.addEventListener(`keydown`, onEscKeyDown);
-  //   };
-  //
-  //   film.getElement()
-  //     .querySelector(`.film-card__title`)
-  //     .addEventListener(`click`, () => {
-  //       renderFilmPopup();
-  //     });
-  //
-  //   film.getElement()
-  //     .querySelector(`.film-card__comments`)
-  //     .addEventListener(`click`, () => {
-  //       renderFilmPopup();
-  //     });
-  //
-  //   film.getElement()
-  //     .querySelector(`.film-card__poster`)
-  //     .addEventListener(`click`, () => {
-  //       renderFilmPopup();
-  //     });
-  //
-  //   filmPopup.getElement()
-  //     .querySelector(`.film-details__close-btn`)
-  //     .addEventListener(`click`, () => {
-  //       unrender(filmPopup.getElement());
-  //     });
-  //
-  //   filmPopup.getElement()
-  //     .querySelector(`textarea`)
-  //     .addEventListener(`focus`, () => {
-  //       document.removeEventListener(`keydown`, onEscKeyDown);
-  //     });
-  //
-  //   filmPopup.getElement()
-  //     .querySelector(`textarea`)
-  //     .addEventListener(`blur`, () => {
-  //       document.addEventListener(`keydown`, onEscKeyDown);
-  //     });
-  //
-  //   render(filmContainer, film.getElement(), Position.BEFOREEND);
-  // }
 
   _renderShowMore() {
     const showMore = new ShowMore();

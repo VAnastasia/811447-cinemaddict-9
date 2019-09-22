@@ -3,6 +3,7 @@ import {AbstractComponent} from './abstract-component';
 
 export class FilmDetails extends AbstractComponent {
   constructor({
+    id,
     poster,
     age,
     title,
@@ -15,11 +16,13 @@ export class FilmDetails extends AbstractComponent {
     genres,
     country,
     description,
+    comments,
     watchlist,
     watched,
     favorite
   }) {
     super();
+    this._id = id;
     this._poster = poster;
     this._age = age;
     this._title = title;
@@ -32,6 +35,7 @@ export class FilmDetails extends AbstractComponent {
     this._genres = genres;
     this._country = country;
     this._description = description;
+    this._comments = comments;
     this._watchlist = watchlist;
     this._watched = watched;
     this._favorite = favorite;
