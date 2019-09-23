@@ -31,19 +31,85 @@ export class MovieController {
     this._film.getElement()
       .querySelector(`.film-card__title`)
       .addEventListener(`click`, () => {
+        this._onChangeView();
         renderFilmPopup();
       });
 
     this._film.getElement()
       .querySelector(`.film-card__comments`)
       .addEventListener(`click`, () => {
+        this._onChangeView();
         renderFilmPopup();
       });
 
     this._film.getElement()
       .querySelector(`.film-card__poster`)
       .addEventListener(`click`, () => {
+        this._onChangeView();
         renderFilmPopup();
+      });
+
+    this._film.getElement()
+      .querySelector(`.film-card__controls-item--add-to-watchlist`)
+      .addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        const entry = {
+          id: this._film._id,
+          poster: this._film._poster,
+          title: this._film._title,
+          rating: this._film._rating,
+          year: this._film._year,
+          runtime: this._film._runtime,
+          genres: this._film._genres,
+          description: this._film._description,
+          comments: this._film._comments,
+          watchlist: !this._film._watchlist,
+          watched: this._film._watched,
+          favorite: this._film._favorite
+        };
+        this._onDataChange(entry, entry.id);
+      });
+
+    this._film.getElement()
+      .querySelector(`.film-card__controls-item--mark-as-watched`)
+      .addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        const entry = {
+          id: this._film._id,
+          poster: this._film._poster,
+          title: this._film._title,
+          rating: this._film._rating,
+          year: this._film._year,
+          runtime: this._film._runtime,
+          genres: this._film._genres,
+          description: this._film._description,
+          comments: this._film._comments,
+          watchlist: this._film._watchlist,
+          watched: !this._film._watched,
+          favorite: this._film._favorite
+        };
+        this._onDataChange(entry, entry.id);
+      });
+
+    this._film.getElement()
+      .querySelector(`.film-card__controls-item--favorite`)
+      .addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        const entry = {
+          id: this._film._id,
+          poster: this._film._poster,
+          title: this._film._title,
+          rating: this._film._rating,
+          year: this._film._year,
+          runtime: this._film._runtime,
+          genres: this._film._genres,
+          description: this._film._description,
+          comments: this._film._comments,
+          watchlist: this._film._watchlist,
+          watched: this._film._watched,
+          favorite: !this._film._favorite
+        };
+        this._onDataChange(entry, entry.id);
       });
 
     this._filmPopup.getElement()
@@ -102,8 +168,8 @@ export class MovieController {
   }
 
   setDefaultView() {
-    if (this._container.getElement().contains(this._filmPopup.getElement())) {
-      this._container.getElement().replaceChild(this._film.getElement(), this._filmPopup.getElement());
+    if (this._container.contains(this._filmPopup.getElement())) {
+      unrender(this._filmPopup.getElement());
     }
   }
 }
