@@ -155,6 +155,8 @@ export class MovieController {
           favorite: Boolean(formData.get(`favorite`))
         };
 
+        renderFilmPopup();
+
         this._filmPopup.getElement()
           .querySelector(`.film-details__close-btn`)
           .addEventListener(`click`, () => {
